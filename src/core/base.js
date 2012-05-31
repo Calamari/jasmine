@@ -489,6 +489,26 @@ var it = function(desc, func) {
 if (isCommonJS) exports.it = it;
 
 /**
+ * Creates an asynchronously running Jasmine spec that will be added to the current suite.
+ *
+ * @example
+ * ait('should be true', function(done) {
+ *   setTimeout(function() {
+ *     expect(true).toEqual(true);
+ *     done();
+ *   }, 10);
+ * });
+ *
+ * @param {String} desc description of this specification
+ * @param {Function} func defines the preconditions and expectations of the spec
+ * @param {Number} optional_timeout defines a timeout
+ */
+var ait = function(desc, func, optional_timeout) {
+  return jasmine.getEnv().ait(desc, func, optional_timeout);
+};
+if (isCommonJS) exports.ait = ait;
+
+/**
  * Creates a <em>disabled</em> Jasmine spec.
  *
  * A convenience method that allows existing specs to be disabled temporarily during development.

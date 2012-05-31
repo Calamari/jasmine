@@ -160,8 +160,8 @@ jasmine.Env.prototype.it = function(description, func) {
   return spec;
 };
 
-jasmine.Env.prototype.ait = function(description, func, timeout) {
-  timeout = jasmine.DEFAULT_TIMEOUT_INTERVAL || timeout;
+jasmine.Env.prototype.ait = function(description, func, optional_timeout) {
+  var timeout = optional_timeout || jasmine.DEFAULT_TIMEOUT_INTERVAL;
   var spec = new jasmine.Spec(this, this.currentSuite, description);
   this.currentSuite.add(spec);
   this.currentSpec = spec;
