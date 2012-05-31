@@ -160,6 +160,32 @@ jasmine.Env.prototype.it = function(description, func) {
   return spec;
 };
 
+jasmine.Env.prototype.ait = function(description, func, timeout) {
+  timeout = jasmine.DEFAULT_TIMEOUT_INTERVAL || timeout;
+  var spec = new jasmine.Spec(this, this.currentSuite, description);
+  this.currentSuite.add(spec);
+  this.currentSpec = spec;
+
+  var done = false;
+  if (func) {
+    spec.runs(function() {
+      try {
+        return func(function(error) {
+          done = true;
+          if (error) return spec.fail(error);
+        });
+      } catch (e) {
+        done = true;
+        throw e;
+      }
+    });
+  }
+
+  return spec.waitsFor(function() {
+    return done === true;
+  }, 'spec to complete', timeout);
+};
+
 jasmine.Env.prototype.xit = function(desc, func) {
   return {
     id: this.nextSpecId(),
